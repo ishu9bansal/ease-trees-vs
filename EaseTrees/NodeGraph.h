@@ -12,7 +12,7 @@ class NodeGraph : public graph<T> {
 public:
 	using graph<T>::addVertex;
 	using graph<T>::removeVertex;
-	bool checkEdge(int x, int y, bool direct) {
+	bool checkEdge(Index x, Index y, bool direct) {
 		if (!direct)	swap(x, y);
 		return nodeMap[x]->isChild(nodeMap[y]);
 	}
@@ -23,17 +23,17 @@ public:
 		}
 		return false;
 	}
-	void addEdge(int x, int y, bool direct) {
+	void addEdge(Index x, Index y, bool direct) {
 		if (!direct)	swap(x, y);
 		nodeMap[x]->addChild(nodeMap[y]);
 		return;
 	}
-	void removeEdge(int x, int y, bool direct) {
+	void removeEdge(Index x, Index y, bool direct) {
 		if (!direct)	swap(x, y);
 		nodeMap[x]->removeChild(nodeMap[y]);
 		return;
 	}
-	void removeVertex(int nodeIndex) {
+	void removeVertex(Index nodeIndex) {
 		graph<T>::removeVertex(nodeIndex);
 		nodeMap[nodeIndex] = nodeMap.back();
 		nodeMap.pop_back();
@@ -41,6 +41,7 @@ public:
 	}
 	void print() {
 		graph<T>::print();
+		cout << endl;
 		cout << "Adjacency List:" << endl;
 		for (int i = 0; i < nodeMap.size(); i++) {
 			vector<Node<T>*> children = nodeMap[i]->getChildren();

@@ -15,8 +15,8 @@ void testNodeGraph() {
 	strGraph.print();
 	string twoD = "2D array";
 	string matrix = "matrix";
-	vector<int> adj1 = strGraph.getAdjacent(twoD);
-	vector<int> adj2 = strGraph.getAdjacent(matrix);
+	vector<string> adj1 = strGraph.map(strGraph.getAdjacent(twoD));
+	vector<string> adj2 = strGraph.map(strGraph.getAdjacent(matrix));
 	for (int i = 0; i<adj1.size(); i++)	cout << '\t' << adj1[i];
 	cout << endl;
 	for (int i = 0; i<adj2.size(); i++)	cout << '\t' << adj2[i];
