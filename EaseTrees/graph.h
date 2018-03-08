@@ -105,7 +105,7 @@ public:
 	virtual vector<int> getAdjacent(int x) {
 		vector<int> result;
 		for (int i = 0; i<reverseMap.size(); i++) {
-			if (checkEdge(x, i, true) || checkEdge(x, i, false))	result.push_back(i);
+			if (checkEdge(x, i))	result.push_back(i);
 		}
 		return result;
 	}
