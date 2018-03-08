@@ -103,9 +103,10 @@ public:
 		return result;
 	}
 	virtual vector<int> getAdjacent(int x) {
-		vector<int> children = getChildren(x);
-		vector<int> result = getParents(x);
-		result.insert(result.end(), children.begin(), children.end());
+		vector<int> result;
+		for (int i = 0; i<reverseMap.size(); i++) {
+			if (checkEdge(x, i, true) || checkEdge(x, i, false))	result.push_back(i);
+		}
 		return result;
 	}
 	virtual vector<int> getChildren(const T& node) {
@@ -143,6 +144,7 @@ public:
 	virtual void removeVertex(const T& node) {
 		removeVertex(dataMap[node]);
 	}
+
 	/*
 	virtual void change(const T& nodeA, const T& nodeB) {
 		int temp = dataMap[nodeA];

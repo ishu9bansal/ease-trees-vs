@@ -37,15 +37,8 @@ public:
 	bool removeChild(Node* nodeRef) {	// returns true if remove was successful 
 		return children.erase(nodeRef);
 	}
-	int addChildren(const vector<Node*>& v) {
-		int count = 0;
-		for (int i = 0; i<v.size(); i++) {
-			if (!isChild(v[i])) {
-				addChild(v[i]);
-				count++;
-			}
-		}
-		return count;
+	void addChildren(const vector<Node*>& v) {
+		children.insert(v.begin(), v.end());
 	}
 	operator T() {
 		return value;
