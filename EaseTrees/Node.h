@@ -11,6 +11,7 @@ template <class T>
 class Node {
 private:
 	T value;
+	unordered_set<Node*> parents;
 	unordered_set<Node*> children;
 public:
 	Node(T t) : value(t) {}
@@ -37,15 +38,27 @@ public:
 	bool removeChild(Node* nodeRef) {	// returns true if remove was successful 
 		return children.erase(nodeRef);
 	}
-	int addChildren(const vector<Node*>& v) {
-		int count = 0;
-		for (int i = 0; i<v.size(); i++) {
-			if (!isChild(v[i])) {
-				addChild(v[i]);
-				count++;
-			}
+	void addChildren(const vector<Node*>& v) {
+		children.insert(v.begin(), v.end());
+	}
+	vector<Node*> getParents() {// both Node* and Node<T>* will work
+		vector<Node*> v;
+		for (const auto& parentRef : parents) {
+			v.push_back(parentRef);
 		}
-		return count;
+		return v;
+	}
+	bool isParent(Node* nodeRef) {
+		return parents.find(nodeRef) != parents.end();
+	}
+	void addParent(Node* nodeRef) {
+		parents.insert(nodeRef);
+	}
+	bool removeParent(Node* nodeRef) {	// returns true if remove was successful 
+		return parents.erase(nodeRef);
+	}
+	void addParents(const vector<Node*>& v) {
+		parents.insert(v.begin(), v.end());
 	}
 	operator T() {
 		return value;

@@ -15,6 +15,17 @@ void printTree(Node<J>* root, int depth = 0) {
 	return;
 }
 
+template <class J>
+void printUpsideDown(Node<J>* root, int depth = 0) {
+	string head = "";
+	head.append(depth, '\t');
+	cout << head << root->getValue() << endl;
+	vector<Node<J>*> v = root->getParents();
+	for (int i = 0; i<v.size(); i++)
+		printUpsideDown(v[i], depth + 1);
+	return;
+}
+
 void testNode() {
 
 	//      0		creating this tree structure
@@ -55,5 +66,27 @@ void testNode() {
 	(*zero).addChild(six);
 
 	printTree(zero);
+
+	cout << "To test the parents part, we can just repeat the same putting parent instead of child." << endl;
+	cout << "This will also make the tree a bidirectional graph." << endl;
+
+	v = { three,four };
+	one->addParents(v);
+	v[0] = eight;
+	v[1] = nine;
+	v.push_back(ten);
+	six->addParents(v);
+	v[0] = five;
+	v[1] = seven;
+	two->addParents(v);
+	cout << "is parent ten in two " << two->isParent(ten) << endl;
+	cout << "removed? " << two->removeParent(ten) << endl;
+
+	(*zero).addParent(one);
+	(*zero).addParent(two);
+	(*zero).addParent(six);
+
+	printUpsideDown(zero);
+
 	return;
 }
