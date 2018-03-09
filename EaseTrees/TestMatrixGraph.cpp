@@ -2,6 +2,17 @@
 #include <string>
 using namespace std;
 
+template <class T>
+void printTree(matrixGraph<T> tree, T root, int depth = 0) {
+	string empty = "";
+	empty.append(depth, '\t');
+	cout << empty << root << endl;
+	vector<T> v = tree.map(tree.getChildren(root));
+	for (int i = 0; i < v.size(); i++)
+		printTree(tree, v[i], depth + 1);
+	return;
+}
+
 void testMatrixGraph(){
 	matrixGraph<string> strGraph;
 	strGraph.addVertex("square");
@@ -24,4 +35,16 @@ void testMatrixGraph(){
 	string nD = "nD array";
 	strGraph.removeVertex(nD);
 	strGraph.print();
+
+	cout << endl << "Testing graph<int>..............." << endl;
+
+	matrixGraph<int> intGraph;
+	intGraph.addVertex(63, { 69,66,71 }, true);
+	intGraph.addVertex(66, { 67,68,72 }, true);
+	intGraph.addVertex(58, { 64,65 }, true);
+	intGraph.addVertex(59, { 63,70 }, true);
+	intGraph.addEdge(59, 63, true);
+	intGraph.print();
+	//printTree(intGraph, 59);
+
 }

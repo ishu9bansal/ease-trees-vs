@@ -123,21 +123,21 @@ public:
 	virtual vector<Index> getChildren(Index x) {
 		vector<Index> result;
 		for (int i = 0; i<reverseMap.size(); i++) {
-			if (checkEdge(x, i, true))	result.push_back(i);
+			if (checkEdge(x, Index(i), true))	result.push_back(i);
 		}
 		return result;
 	}
 	virtual vector<Index> getParents(Index x) {
 		vector<Index> result;
 		for (int i = 0; i<reverseMap.size(); i++) {
-			if (checkEdge(x, i, false))	result.push_back(i);
+			if (checkEdge(x, Index(i), false))	result.push_back(i);
 		}
 		return result;
 	}
 	virtual vector<Index> getAdjacent(Index x) {
 		vector<Index> result;
 		for (int i = 0; i<reverseMap.size(); i++) {
-			if (checkEdge(x, i))	result.push_back(i);
+			if (checkEdge(x, Index(i)))	result.push_back(i);
 		}
 		return result;
 	}

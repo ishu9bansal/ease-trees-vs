@@ -12,6 +12,9 @@ class NodeGraph : public graph<T> {
 public:
 	using graph<T>::addVertex;
 	using graph<T>::removeVertex;
+	using graph<T>::addEdge;
+	using graph<T>::removeEdge;
+	using graph<T>::checkEdge;
 	bool checkEdge(Index x, Index y, bool direct) {
 		if (!direct)	swap(x, y);
 		return nodeMap[x]->isChild(nodeMap[y]);
