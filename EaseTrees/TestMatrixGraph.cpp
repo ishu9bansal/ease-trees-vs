@@ -4,6 +4,7 @@ using namespace std;
 
 template <class T>
 void printTree(matrixGraph<T> tree, T root, int depth = 0) {
+	// careful if it is not tree, it will go in an infinite loop.
 	string empty = "";
 	empty.append(depth, '\t');
 	cout << empty << root << endl;
@@ -37,14 +38,30 @@ void testMatrixGraph(){
 	strGraph.print();
 
 	cout << endl << "Testing graph<int>..............." << endl;
+	// graph structure is as following
+	//
+	// 59
+	// 	|--	70
+	// 	---	63
+	// 		|--	69
+	// 		|--	71
+	// 		|--	58
+	// 		|	|--	64
+	// 		|	---	65
+	// 		---	66
+	// 			|--	67
+	// 			|--	68
+	// 			---	72
+
+
 
 	matrixGraph<int> intGraph;
 	intGraph.addVertex(63, { 69,66,71 }, true);
 	intGraph.addVertex(66, { 67,68,72 }, true);
 	intGraph.addVertex(58, { 64,65 }, true);
 	intGraph.addVertex(59, { 63,70 }, true);
-	intGraph.addEdge(59, 63, true);
-	intGraph.print();
-	//printTree(intGraph, 59);
+	intGraph.addEdge(58, 63, false);
+	//intGraph.print();
+	printTree(intGraph, 59);
 
 }
