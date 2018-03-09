@@ -84,22 +84,30 @@ public:
 		addEdge(a, b, false);
 	}
 	virtual void addEdge(const T& nodeA, const T& nodeB, bool AtoB) {
+		addVertex(nodeA);
+		addVertex(nodeB);
 		addEdge(dataMap[nodeA], dataMap[nodeB], AtoB);
 	}
 	virtual void addEdge(const T& nodeA, const T& nodeB) {
+		addVertex(nodeA);
+		addVertex(nodeB);
 		addEdge(dataMap[nodeA], dataMap[nodeB]);
 	}
 	virtual void addVertex(const T& node, const vector<T>& nodeList, vector<bool> newToOld) {
 		addVertex(node);
 		Index nodeIndex = dataMap[node];
-		for (int i = 0; i<nodeList.size(); i++)
+		for (int i = 0; i < nodeList.size(); i++) {
+			addVertex(nodeList[i]);
 			addEdge(nodeIndex, dataMap[nodeList[i]], newToOld[i]);
+		}
 	}
 	virtual void addVertex(const T& node, const vector<T>& nodeList, bool newToOld) {
 		addVertex(node);
 		Index nodeIndex = dataMap[node];
-		for (int i = 0; i<nodeList.size(); i++)
+		for (int i = 0; i < nodeList.size(); i++) {
+			addVertex(nodeList[i]);
 			addEdge(nodeIndex, dataMap[nodeList[i]], newToOld);
+		}
 	}
 	virtual void addVertex(const T& node, const vector<T>& nodeList) {
 		addVertex(node);

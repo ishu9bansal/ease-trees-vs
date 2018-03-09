@@ -24,4 +24,16 @@ void testNodeGraph() {
 	string nD = "nD array";
 	strGraph.removeVertex(nD);
 	strGraph.print();
+
+	cout << endl;
+	cout << "Checking directed graph..............." << endl;
+	cout << endl;
+
+	NodeGraph<string> directed;
+	directed.addChildren("abc", { "lmn","xyz" });
+	directed.addParents("abc", { "uvw","lmn" });
+	directed.addChild("xyz", "lmn");
+	directed.print();
+
+	return;
 }
