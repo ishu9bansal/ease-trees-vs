@@ -13,7 +13,7 @@ class matrixGraph : public graph<T> {
 public:
 	using graph<T>::addVertex;
 	using graph<T>::removeVertex;
-	bool checkEdge(int x, int y, bool direct) {
+	bool checkEdge(Index x, Index y, bool direct) {
 		if (!direct)	swap(x, y);
 		return edgeMap(x, y);
 	}
@@ -24,17 +24,17 @@ public:
 		}
 		return false;
 	}
-	void addEdge(int x, int y, bool direct) {
+	void addEdge(Index x, Index y, bool direct) {
 		if (!direct)	swap(x, y);
 		edgeMap(x, y) = 1;
 		return;
 	}
-	void removeEdge(int x, int y, bool direct) {
+	void removeEdge(Index x, Index y, bool direct) {
 		if (!direct)	swap(x, y);
 		edgeMap(x, y) = 0;
 		return;
 	}
-	void removeVertex(int nodeIndex) {
+	void removeVertex(Index nodeIndex) {
 		graph<T>::removeVertex(nodeIndex);
 		edgeMap.remove(nodeIndex);
 		return;
