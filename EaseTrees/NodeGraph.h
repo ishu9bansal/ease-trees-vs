@@ -45,18 +45,6 @@ public:
 		nodeMap.pop_back();
 		return;
 	}
-	void addChild(const T& node, const T& child) {
-		addEdge(node, child, true);
-	}
-	void addParent(const T& node, const T& child) {
-		addEdge(node, child, false);
-	}
-	void addChildren(const T& node, const vector<T>& nodeList) {
-		addVertex(node, nodeList, true);
-	}
-	void addParents(const T& node, const vector<T>& nodeList) {
-		addVertex(node, nodeList, false);
-	}
 	void print() {
 		graph<T>::print();
 		cout << endl;

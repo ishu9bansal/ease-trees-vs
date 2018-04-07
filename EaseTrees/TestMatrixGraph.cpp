@@ -37,6 +37,16 @@ void testMatrixGraph(){
 	strGraph.removeVertex(nD);
 	strGraph.print();
 
+	cout << endl;
+	cout << "Checking directed graph..............." << endl;
+	cout << endl;
+
+	matrixGraph<string> directed;
+	directed.addChildren("abc", { "lmn","xyz" });
+	directed.addParents("abc", { "uvw","lmn" });
+	directed.addChild("xyz", "lmn");
+	directed.print();
+
 	cout << endl << "Testing graph<int>..............." << endl;
 	// graph structure is as following
 	//

@@ -129,6 +129,18 @@ public:
 	void removeEdge(const T& nodeA, const T& nodeB) {
 		removeEdge(dataMap[nodeA], dataMap[nodeB]);
 	}
+	void addChild(const T& node, const T& child) {
+		addEdge(node, child, true);
+	}
+	void addParent(const T& node, const T& child) {
+		addEdge(node, child, false);
+	}
+	void addChildren(const T& node, const vector<T>& nodeList) {
+		addVertex(node, nodeList, true);
+	}
+	void addParents(const T& node, const vector<T>& nodeList) {
+		addVertex(node, nodeList, false);
+	}
 	vector<Index> getChildren(Index x) {
 		vector<Index> result;
 		for (int i = 0; i<reverseMap.size(); i++) {
@@ -200,8 +212,13 @@ public:
 		cout << "Total vertices in graph: " << reverseMap.size() << endl;
 		cout << "Vertex Mapping:" << endl;
 		for (int i = 0; i<reverseMap.size(); i++) {
-			cout << i << "\t" << reverseMap[i] << endl;
+			cout << i << "\t";
 		}
+		cout << endl;
+		for (int i = 0; i<reverseMap.size(); i++) {
+			cout << reverseMap[i] << "\t";
+		}
+		cout << endl;
 	}
 
 };
