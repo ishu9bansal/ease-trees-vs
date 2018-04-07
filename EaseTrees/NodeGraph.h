@@ -9,36 +9,16 @@
 template <class T>
 class NodeGraph : public graph<T> {
 	vector<Node<T>*> nodeMap;
-	bool strong;
 public:
 	using graph<T>::addVertex;
 	using graph<T>::addEdge;
 	using graph<T>::removeVertex;
 	using graph<T>::removeEdge;
 	using graph<T>::checkEdge;
-	NodeGraph() : strong(false) {
-		// this boolean tells that wether it will stick to its implementation strongly or not.
-		// if strong is true,
-		// then if user changes the graph in a form that it changes the directional structure it will react abruptly
-		// e.g. if user removes the child relation and didn't remove the parent relation and strong is on, 
-		// then it will check the relation both sides, because it is not complete hence will return false
-		// whereas if strong is off, only the partial relation like in this case will return true
-
-		// by default it is NOT strong; i.e. strong = false;
-
-		// keeping it default false, will make it usefull in case when we are not using this node as parent child node
-		// when we use it regarding only children and not use parent, 
-		// there will not be any concept of strong and hence should give true results.
-	}
-
-	NodeGraph(bool bul) :strong(bul) {}
 
 	bool checkEdge(Index x, Index y, bool direct) {
 		if (!direct)	swap(x, y);
-		if (strong)
-			return nodeMap[x]->isChild(nodeMap[y]) && nodeMap[y]->isParent(nodeMap[x]);
-		else
-			return nodeMap[x]->isChild(nodeMap[y]) || nodeMap[y]->isParent(nodeMap[x]);
+		return nodeMap[x]->isChild(nodeMap[y]) || nodeMap[y]->isParent(nodeMap[x]);
 	}
 	bool addVertex(const T& node) {
 		if (graph<T>::addVertex(node)) {
