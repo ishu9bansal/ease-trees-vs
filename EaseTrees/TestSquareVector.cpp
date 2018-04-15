@@ -61,5 +61,13 @@ void testSquareVector() {
 	square3.addOne(vector<char>(internal[3].begin(), internal[3].begin() + 3), internal[3][3], vector<char>(internal[3].rbegin(), internal[3].rbegin() + 3));
 	cout << "square3 added more" << endl;
 	cout << square3 << endl;
+
+	vectorSquare<bool> squareBool(4);
+	for (int i = 0; i<4; i++)
+		for (int j = 0; j<4; j++)
+			squareBool(i, j) = (i+j)%2;
+	cout << "squareBool" << endl;
+	cout << squareBool << endl;
+
 	return;
 }
