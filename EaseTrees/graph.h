@@ -14,14 +14,25 @@ public:
 	operator int() {
 		return x;
 	}
-
 };
 
-template <class T>
+template <class U>
+class Weight {
+	U x;
+public:
+	Weight(U i) :x(i) {}
+	Weight() :x(0) {}
+	operator U() {
+		return x;
+	}
+};
+template <class T, class U=bool>
 class graph {
 protected:
 	unordered_map<T, Index> dataMap;
 	vector<T> reverseMap;
+	static Weight<U> zero;
+	static Weight<U> one;
 public:
 	graph() {
 	}
@@ -79,20 +90,23 @@ public:
 		return checkEdge( dataMap[nodeA], dataMap[nodeB]);
 	}
 
-	virtual void addEdge(Index, Index, bool) = 0;		// pure virtual function
-	void addEdge(Index a, Index b) {
-		addEdge(a, b, true);
-		addEdge(a, b, false);
+	virtual void vAddEdge(Index, Index, bool) = 0;		// pure virtual function
+	virtual void addEdge(Index a, Index b, bool AtoB, Weight<U> w = one) {
+		vAddEdge(a, b, AtoB);
 	}
-	void addEdge(const T& nodeA, const T& nodeB, bool AtoB) {
+	void addEdge(Index a, Index b, Weight<U> w = one) {
+		addEdge(a, b, true, w);
+		addEdge(a, b, false, w);
+	}
+	void addEdge(const T& nodeA, const T& nodeB, bool AtoB, Weight<U> w = one) {
 		addVertex(nodeA);
 		addVertex(nodeB);
-		addEdge(dataMap[nodeA], dataMap[nodeB], AtoB);
+		addEdge(dataMap[nodeA], dataMap[nodeB], AtoB, w);
 	}
-	void addEdge(const T& nodeA, const T& nodeB) {
+	void addEdge(const T& nodeA, const T& nodeB, Weight<U> w = one) {
 		addVertex(nodeA);
 		addVertex(nodeB);
-		addEdge(dataMap[nodeA], dataMap[nodeB]);
+		addEdge(dataMap[nodeA], dataMap[nodeB], w);
 	}
 	void addVertex(const T& node, const vector<T>& nodeList, vector<bool> newToOld) {
 		addVertex(node);
@@ -222,5 +236,8 @@ public:
 	}
 
 };
+
+template<class T>
+Weight<bool> graph<T, bool>::zero = Weight<bool>(0);
 
 #endif // !graph_h
