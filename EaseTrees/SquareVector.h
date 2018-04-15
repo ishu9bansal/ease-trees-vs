@@ -7,6 +7,16 @@
 
 using namespace std;
 
+template<typename T>
+struct vector_ref {
+	using type = T&;
+};
+template<>
+struct vector_ref<bool> {
+	using type = vector<bool>::reference;
+};
+
+
 template <class T>
 class vectorSquare {
 	vector<vector<T> > data;
@@ -85,7 +95,7 @@ public:
 		data.pop_back();
 		return vs;
 	}
-	T& operator()(int r, int c) {
+	typename vector_ref<T>::type operator()(int r, int c) {
 		if (r<c)	return data[c][2 * c - r];
 		else	return data[r][c];
 	}
