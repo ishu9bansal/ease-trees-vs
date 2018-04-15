@@ -7,16 +7,15 @@
 #include "graph.h"
 #include "SquareVector.h"
 
-template <class T, class U = bool>
-class matrixGraph : public graph<T, U> {
-	vectorSquare<U> edgeMap;
+template <class T>
+class matrixGraph : public graph<T> {
+	vectorSquare<int> edgeMap;
 public:
-	using graph<T, U>::addVertex;
-	using graph<T, U>::addEdge;
-	using graph<T, U>::removeEdge;
-	using graph<T, U>::removeVertex;
-	using graph<T, U>::checkEdge;
-
+	using graph<T>::addVertex;
+	using graph<T>::addEdge;
+	using graph<T>::removeEdge;
+	using graph<T>::removeVertex;
+	using graph<T>::checkEdge;
 	bool checkEdge(Index x, Index y, bool direct) {
 		if (!direct)	swap(x, y);
 		return edgeMap(x, y);
@@ -28,17 +27,14 @@ public:
 		}
 		return false;
 	}
-	void vAddEdge(Index x, Index y, bool direct) {
-		addEdge(x, y, direct);
-	}
-	void addEdge(Index x, Index y, bool direct, Weight<U> w = graph<T, U>::one) {
+	void addEdge(Index x, Index y, bool direct) {
 		if (!direct)	swap(x, y);
-		edgeMap(x, y) = w;
+		edgeMap(x, y) = 1;
 		return;
 	}
 	void removeEdge(Index x, Index y, bool direct) {
 		if (!direct)	swap(x, y);
-		edgeMap(x, y) = graph<T,U>::zero;
+		edgeMap(x, y) = 0;
 		return;
 	}
 	void removeVertex(Index nodeIndex) {
