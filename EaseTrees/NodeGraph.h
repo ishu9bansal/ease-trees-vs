@@ -11,9 +11,7 @@ class NodeGraph : public graph<T> {
 	vector<Node<T>*> nodeMap;
 public:
 	using graph<T>::addVertex;
-	using graph<T>::addEdge;
 	using graph<T>::removeVertex;
-	using graph<T>::removeEdge;
 	using graph<T>::checkEdge;
 
 	bool checkEdge(Index x, Index y, bool direct) {
@@ -33,7 +31,7 @@ public:
 		nodeMap[y]->addParent(nodeMap[x]);
 		return;
 	}
-	void removeEdge(Index x, Index y, bool direct) {
+	void vRemoveEdge(Index x, Index y, bool direct) {
 		if (!direct)	swap(x, y);
 		nodeMap[x]->removeChild(nodeMap[y]);
 		nodeMap[y]->removeParent(nodeMap[x]);

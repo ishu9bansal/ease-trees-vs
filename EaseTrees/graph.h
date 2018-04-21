@@ -31,10 +31,18 @@ class graph {
 protected:
 	unordered_map<T, Index> dataMap;
 	vector<T> reverseMap;
-	static Weight<U> zero;
-	static Weight<U> one;
+	Weight<U> zero;
+	Weight<U> one;
 public:
 	graph() {
+		U z = 0;
+		U o = 1;
+		zero = z;
+		one = o;
+	}
+	graph(U z, U o) {
+		zero = z;
+		one = o;
 	}
 	~graph() {
 		dataMap.clear();
@@ -91,19 +99,48 @@ public:
 	}
 
 	virtual void vAddEdge(Index, Index, bool) = 0;		// pure virtual function
-	virtual void addEdge(Index a, Index b, bool AtoB, Weight<U> w = one) {
-		vAddEdge(a, b, AtoB);
+	virtual void setWeight(Index a, Index b, bool AtoB, Weight<U> w) {
+		// implement if wanted
 	}
-	void addEdge(Index a, Index b, Weight<U> w = one) {
+	virtual U getWeight(Index a, Index b, bool AtoB) {
+		if (checkEdge(a, b, AtoB)) {
+			return one;
+		}
+		else {
+			return zero;
+		}
+	}
+	void addEdge(Index a, Index b, bool AtoB) {
+		addEdge(a, b, AtoB, one);
+	}
+	void addEdge(Index a, Index b) {
+		addEdge(a, b, true);
+		addEdge(a, b, false);
+	}
+	void addEdge(const T& nodeA, const T& nodeB, bool AtoB) {
+		addVertex(nodeA);
+		addVertex(nodeB);
+		addEdge(dataMap[nodeA], dataMap[nodeB], AtoB);
+	}
+	void addEdge(const T& nodeA, const T& nodeB) {
+		addVertex(nodeA);
+		addVertex(nodeB);
+		addEdge(dataMap[nodeA], dataMap[nodeB]);
+	}
+	void addEdge(Index a, Index b, bool AtoB, Weight<U> w) {
+		vAddEdge(a, b, AtoB);
+		setWeight(a, b, AtoB, w);
+	}
+	void addEdge(Index a, Index b, Weight<U> w) {
 		addEdge(a, b, true, w);
 		addEdge(a, b, false, w);
 	}
-	void addEdge(const T& nodeA, const T& nodeB, bool AtoB, Weight<U> w = one) {
+	void addEdge(const T& nodeA, const T& nodeB, bool AtoB, Weight<U> w) {
 		addVertex(nodeA);
 		addVertex(nodeB);
 		addEdge(dataMap[nodeA], dataMap[nodeB], AtoB, w);
 	}
-	void addEdge(const T& nodeA, const T& nodeB, Weight<U> w = one) {
+	void addEdge(const T& nodeA, const T& nodeB, Weight<U> w) {
 		addVertex(nodeA);
 		addVertex(nodeB);
 		addEdge(dataMap[nodeA], dataMap[nodeB], w);
@@ -132,7 +169,11 @@ public:
 			addEdge(nodeIndex, dataMap[nodeList[i]]);
 		return;
 	}
-	virtual void removeEdge(Index, Index, bool) = 0;		// pure virtual function
+	virtual void vRemoveEdge(Index, Index, bool) = 0;		// pure virtual function
+	void removeEdge(Index a, Index b, bool AtoB) {
+		setWeight(a, b, AtoB, zero);
+		vRemoveEdge(a, b, AtoB);
+	}
 	void removeEdge(Index a, Index b) {
 		removeEdge(a, b, true);
 		removeEdge(a, b, false);
@@ -236,8 +277,5 @@ public:
 	}
 
 };
-
-template<class T>
-Weight<bool> graph<T, bool>::zero = Weight<bool>(0);
 
 #endif // !graph_h

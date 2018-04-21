@@ -12,10 +12,10 @@ class matrixGraph : public graph<T, U> {
 	vectorSquare<U> edgeMap;
 public:
 	using graph<T, U>::addVertex;
-	using graph<T, U>::addEdge;
-	using graph<T, U>::removeEdge;
 	using graph<T, U>::removeVertex;
 	using graph<T, U>::checkEdge;
+	using graph<T, U>::zero;
+	using graph<T, U>::one;
 
 	bool checkEdge(Index x, Index y, bool direct) {
 		if (!direct)	swap(x, y);
@@ -28,18 +28,20 @@ public:
 		}
 		return false;
 	}
-	void vAddEdge(Index x, Index y, bool direct) {
-		addEdge(x, y, direct);
-	}
-	void addEdge(Index x, Index y, bool direct, Weight<U> w = graph<T, U>::one) {
+	void setWeight(Index x, Index y, bool direct, Weight<U> w) {
 		if (!direct)	swap(x, y);
 		edgeMap(x, y) = w;
 		return;
 	}
-	void removeEdge(Index x, Index y, bool direct) {
+	U getWeight(Index x, Index y, bool direct) {
 		if (!direct)	swap(x, y);
-		edgeMap(x, y) = graph<T,U>::zero;
-		return;
+		return edgeMap(x, y);
+	}
+	void vAddEdge(Index x, Index y, bool direct) {
+		setWeight(x, y, direct, one);
+	}
+	void vRemoveEdge(Index x, Index y, bool direct) {
+		setWeight(x, y, direct, zero);
 	}
 	void removeVertex(Index nodeIndex) {
 		graph<T>::removeVertex(nodeIndex);
