@@ -14,8 +14,8 @@ public:
 	using graph<T, U>::addVertex;
 	using graph<T, U>::removeVertex;
 	using graph<T, U>::checkEdge;
-	using graph<T, U>::zero;
-	using graph<T, U>::one;
+	//using graph<T, U>::zero;
+	//using graph<T, U>::one;
 
 	bool checkEdge(Index x, Index y, bool direct) {
 		if (!direct)	swap(x, y);
@@ -38,10 +38,10 @@ public:
 		return edgeMap(x, y);
 	}
 	void vAddEdge(Index x, Index y, bool direct) {
-		setWeight(x, y, direct, one);
+		// setWeight(x, y, direct, one);
 	}
 	void vRemoveEdge(Index x, Index y, bool direct) {
-		setWeight(x, y, direct, zero);
+		// setWeight(x, y, direct, zero);
 	}
 	void removeVertex(Index nodeIndex) {
 		graph<T>::removeVertex(nodeIndex);
