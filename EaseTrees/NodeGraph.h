@@ -27,7 +27,7 @@ public:
 		}
 		return false;
 	}
-	void addEdge(Index x, Index y, bool direct) {
+	void vAddEdge(Index x, Index y, bool direct) {
 		if (!direct)	swap(x, y);
 		nodeMap[x]->addChild(nodeMap[y]);
 		nodeMap[y]->addParent(nodeMap[x]);
