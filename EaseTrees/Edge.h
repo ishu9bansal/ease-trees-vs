@@ -11,6 +11,7 @@ protected:
 	VertexBase* from;
 	VertexBase* to;
 public:
+	virtual ~EdgeBase() {};
 	EdgeBase(){}
 	EdgeBase(VertexBase* fromNode, VertexBase* toNode) : from(fromNode), to(toNode) {}
 	VertexBase* getFrom() {

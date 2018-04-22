@@ -12,6 +12,7 @@ protected:
 	vector<EdgeBase*> outward;
 	vector<EdgeBase*> inward;
 public:
+	virtual ~VertexBase() {};
 	VertexBase() {}
 	vector<EdgeBase*>& getOutwardEdges() {
 		return outward;

@@ -4,12 +4,14 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <typeinfo>
 using namespace std;
 
 void printEdge(EdgeBase* edge) {
-	Vertex<string> temp;
-	temp = *edge->getFrom();
-	cout << "Distance from " << edge->getFrom() << " to " << edge->getTo() << " is " << *edge << "kms." << endl;
+	Vertex<string> *tempFrom = dynamic_cast<Vertex<string>*>(edge->getFrom());
+	Vertex<string> *tempTo = dynamic_cast<Vertex<string>*>(edge->getTo());
+	Edge<int> *tempEdge = dynamic_cast<Edge<int>*>(edge);
+	cout << "Distance from " << tempFrom->getValue() << " to " << tempTo->getValue() << " is " << *tempEdge << "kms." << endl;
 	return;
 }
 
@@ -20,13 +22,13 @@ void printVertex(Vertex<T> vertex) {
 	edges = vertex.getOutwardEdges();
 	cout << "Out:";
 	for (int i = 0; i < edges.size(); i++) {
-		cout << '\t' << *edges[i];
+		cout << '\t' << edges[i];
 	}
 	cout << endl;
 	edges = vertex.getInwardEdges();
 	cout << "In:";
 	for (int i = 0; i < edges.size(); i++) {
-		cout << '\t' << *edges[i];
+		cout << '\t' << edges[i];
 	}
 	cout << endl;
 }
