@@ -147,6 +147,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Edge.h" />
     <ClInclude Include="graph.h" />
     <ClInclude Include="Header.h" />
     <ClInclude Include="matrixGraph.h" />
@@ -156,9 +157,11 @@
     <ClInclude Include="SquareVector.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="Vertex.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EaseTrees.cpp" />
+    <ClCompile Include="TestEdge.cpp" />
     <ClCompile Include="TestMatrixGraph.cpp" />
     <ClCompile Include="TestNode.cpp" />
     <ClCompile Include="stdafx.cpp">

@@ -17,6 +17,8 @@ public:
 	//using graph<T, U>::zero;
 	//using graph<T, U>::one;
 
+	matrixGraph(){}
+	matrixGraph(U z, U o) : graph<T,U>(z,o) {}
 	bool checkEdge(Index x, Index y, bool direct) {
 		if (!direct)	swap(x, y);
 		return edgeMap(x, y);

@@ -7,3 +7,5 @@
 #include "SquareVector.h"
 #include "matrixGraph.h"
 #include "NodeGraph.h"
+#include "Edge.h"
+#include "Vertex.h"

@@ -74,4 +74,6 @@ void testMatrixGraph(){
 	//intGraph.print();
 	printTree(intGraph, 59);
 
+	matrixGraph<string> check(true, false);
+
 }
