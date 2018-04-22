@@ -61,8 +61,8 @@ void testEdge() {
 
 	vector<EdgeBase*> puneEdges = { &ptod,&ptom };
 	pune.setOutwardEdges(puneEdges);
-	puneEdges = pune.getInwardEdges();
-	puneEdges.push_back(&ctop);
+	vector<EdgeBase*> &refEdges = pune.getInwardEdges();
+	refEdges.push_back(&ctop);
 
 	puneEdges = pune.getEdges();
 
