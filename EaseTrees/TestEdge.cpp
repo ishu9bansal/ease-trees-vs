@@ -7,61 +7,59 @@
 #include <typeinfo>
 using namespace std;
 
-void printEdge(EdgeBase* edge) {
-	Vertex<string> *tempFrom = dynamic_cast<Vertex<string>*>(edge->getFrom());
-	Vertex<string> *tempTo = dynamic_cast<Vertex<string>*>(edge->getTo());
-	Edge<int> *tempEdge = dynamic_cast<Edge<int>*>(edge);
-	cout << "Distance from " << tempFrom->getValue() << " to " << tempTo->getValue() << " is " << *tempEdge << "kms." << endl;
+template <class V, class E>
+void printEdge(Edge<V, E>* edge) {
+	cout << "Distance from " << edge->getFrom()->getValue() << " to " << edge->getTo()->getValue() << " is " << edge->getValue() << "kms." << endl;
 	return;
 }
 
-template <class T>
-void printVertex(Vertex<T> vertex) {
+template <class V, class E>
+void printVertex(Vertex<V, E> vertex) {
 	cout << vertex.getValue() << endl;
-	vector<EdgeBase*> edges;
+	vector<Edge<V, E>*> edges;
 	edges = vertex.getOutwardEdges();
 	cout << "Out:";
 	for (int i = 0; i < edges.size(); i++) {
-		cout << '\t' << edges[i];
+		cout << '\t' << *edges[i];
 	}
 	cout << endl;
 	edges = vertex.getInwardEdges();
 	cout << "In:";
 	for (int i = 0; i < edges.size(); i++) {
-		cout << '\t' << edges[i];
+		cout << '\t' << *edges[i];
 	}
 	cout << endl;
 }
 
 void testEdge() {
 
-	Vertex<string> pune("Pune");
-	Vertex<string> delhi("Delhi");
-	Vertex<string> mumbai("Mumbai");
-	Vertex<string> chandigarh("Chandigarh");
+	Vertex<string, int> pune("Pune");
+	Vertex<string, int> delhi("Delhi");
+	Vertex<string, int> mumbai("Mumbai");
+	Vertex<string, int> chandigarh("Chandigarh");
 
-	Vertex<string> goa;
+	Vertex<string, int> goa;
 	goa.setValue("Goa");
-	cout << "Let's plan for " << string(goa) << endl;
+	cout << "Let's plan for " << string(goa) << endl;	// only this bit doesn't work, everything else did
 	cout << goa.getValue() << "!!!!" << endl;
 
 
-	Edge<int> ptod(1440, &pune, &delhi);
-	Edge<int> ctop(1700);
+	Edge<string, int> ptod(1440, &pune, &delhi);
+	Edge<string, int> ctop(1700);
 	ctop.setFrom(&chandigarh);
 	ctop.setTo(&pune);
-	Edge<int> dtoc;
+	Edge<string, int> dtoc;
 	dtoc.setValue(260);
 	dtoc.setFrom(&delhi);
 	dtoc.setTo(&chandigarh);
-	Edge<int> ptom(&pune, &mumbai);
+	Edge<string, int> ptom(&pune, &mumbai);
 	ptom.setValue(150);
 	
 	cout << "Plan never succeeds. Not from atleast last " << ptom << " times." << endl;
 
-	vector<EdgeBase*> puneEdges = { &ptod,&ptom };
+	vector<Edge<string, int>*> puneEdges = { &ptod,&ptom };
 	pune.setOutwardEdges(puneEdges);
-	vector<EdgeBase*> &refEdges = pune.getInwardEdges();
+	vector<Edge<string, int>*> &refEdges = pune.getInwardEdges();
 	refEdges.push_back(&ctop);
 
 	puneEdges = pune.getEdges();

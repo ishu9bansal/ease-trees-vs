@@ -5,59 +5,51 @@
 #include "Edge.h"
 #include <vector>
 using namespace std;
-class EdgeBase;
 
-class VertexBase {
-protected:
-	vector<EdgeBase*> outward;
-	vector<EdgeBase*> inward;
-public:
-	virtual ~VertexBase() {};
-	VertexBase() {}
-	vector<EdgeBase*>& getOutwardEdges() {
-		return outward;
-	}
-	void setOutwardEdges(vector<EdgeBase*> edges) {
-		outward = edges;
-		return;
-	}
-	void addOutwardEdge(EdgeBase* edge) {
-		outward.push_back(edge);
-		return;
-	}
-	vector<EdgeBase*>& getInwardEdges() {
-		return inward;
-	}
-	void setInwardEdges(vector<EdgeBase*> edges) {
-		inward = edges;
-		return;
-	}
-	void addInwardEdge(EdgeBase* edge) {
-		inward.push_back(edge);
-		return;
-	}
-	vector<EdgeBase*> getEdges() {
-		vector<EdgeBase*> edges = outward;
-		edges.insert(edges.end(), inward.begin(), inward.end());
-		return edges;
-	}
-};
-
-template <class T>
-class Vertex : public VertexBase {
+template <class V, class E>
+class Vertex{
 private:
-	T value;
+	V value;
+	vector<Edge<V, E>*> outward;
+	vector<Edge<V, E>*> inward;
 public:
 	Vertex() {}
-	Vertex(T t) : value(t) {}
-	T getValue() {
+	Vertex(V t) : value(t) {}
+	V getValue() {
 		return value;
 	}
-	void setValue(T t) {
+	void setValue(V t) {
 		value = t;
 		return;
 	}
-	operator T() {
+	vector<Edge<V, E>*>& getOutwardEdges() {
+		return outward;
+	}
+	void setOutwardEdges(vector<Edge<V, E>*> edges) {
+		outward = edges;
+		return;
+	}
+	void addOutwardEdge(Edge<V, E>* edge) {
+		outward.push_back(edge);
+		return;
+	}
+	vector<Edge<V, E>*>& getInwardEdges() {
+		return inward;
+	}
+	void setInwardEdges(vector<Edge<V, E>*> edges) {
+		inward = edges;
+		return;
+	}
+	void addInwardEdge(Edge<V, E>* edge) {
+		inward.push_back(edge);
+		return;
+	}
+	vector<Edge<V, E>*> getEdges() {
+		vector<Edge<V, E>*> edges = outward;
+		edges.insert(edges.end(), inward.begin(), inward.end());
+		return edges;
+	}
+	operator V() {
 		return value;
 	}
 };

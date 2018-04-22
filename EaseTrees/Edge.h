@@ -2,51 +2,43 @@
 #define edge_h
 
 
-#include "Vertex.h"
 using namespace std;
-class VertexBase;
+template <class V, class E>
+class Vertex;
 
-class EdgeBase {
-protected:
-	VertexBase* from;
-	VertexBase* to;
+template <class V, class E>
+class Edge{
+private:
+	E value;
+	Vertex<V, E>* from;
+	Vertex<V, E>* to;
 public:
-	virtual ~EdgeBase() {};
-	EdgeBase(){}
-	EdgeBase(VertexBase* fromNode, VertexBase* toNode) : from(fromNode), to(toNode) {}
-	VertexBase* getFrom() {
+	Edge(){}
+	Edge(E t) : value(t) {}
+	Edge(Vertex<V, E>* fromNode, Vertex<V, E>* toNode) : from(fromNode), to(toNode) {}
+	Edge(E t, Vertex<V, E>* fromNode, Vertex<V, E>* toNode) : value(t), from(fromNode), to(toNode) {}
+	Vertex<V, E>* getFrom() {
 		return from;
 	}
-	void setFrom(VertexBase* node) {
+	void setFrom(Vertex<V, E>* node) {
 		from = node;
 		return;
 	}
-	VertexBase* getTo() {
+	Vertex<V, E>* getTo() {
 		return to;
 	}
-	void setTo(VertexBase* node) {
+	void setTo(Vertex<V, E>* node) {
 		to = node;
 		return;
 	}
-};
-
-template <class T>
-class Edge : public EdgeBase{
-private:
-	T value;
-public:
-	Edge(){}
-	Edge(T t) : value(t) {}
-	Edge(VertexBase* fromNode, VertexBase* toNode) : EdgeBase(fromNode, toNode) {}
-	Edge(T t, VertexBase* fromNode, VertexBase* toNode) : value(t), EdgeBase(fromNode,toNode) {}
-	T getValue() {
+	E getValue() {
 		return value;
 	}
-	void setValue(T t) {
+	void setValue(E t) {
 		value = t;
 		return;
 	}
-	operator T() {
+	operator E() {
 		return value;
 	}
 };
