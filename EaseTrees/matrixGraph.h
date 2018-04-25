@@ -14,14 +14,14 @@ public:
 	using graph<T, U>::addVertex;
 	using graph<T, U>::removeVertex;
 	using graph<T, U>::checkEdge;
-	//using graph<T, U>::zero;
+	using graph<T, U>::zero;
 	//using graph<T, U>::one;
 
 	matrixGraph(){}
 	matrixGraph(U z, U o) : graph<T,U>(z,o) {}
 	bool checkEdge(Index x, Index y, bool direct) {
 		if (!direct)	swap(x, y);
-		return edgeMap(x, y);
+		return edgeMap(x, y)!=U(zero);
 	}
 	bool addVertex(const T& node) {
 		if (graph<T>::addVertex(node)) {
@@ -32,7 +32,7 @@ public:
 	}
 	void setWeight(Index x, Index y, bool direct, Weight<U> w) {
 		if (!direct)	swap(x, y);
-		edgeMap(x, y) = w;
+		edgeMap(x, y) = U(w);
 		return;
 	}
 	U getWeight(Index x, Index y, bool direct) {
