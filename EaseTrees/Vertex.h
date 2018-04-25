@@ -9,10 +9,6 @@ using namespace std;
 
 template <class V, class E>
 class Vertex{
-	// this will be a raw class,
-	// intermediate states may exist while using it,
-	// implementor have to take care of that
-	// (intermediate but not inconsistant, see return type bool)
 private:
 	V value;
 	unordered_map<Vertex<V, E>*, Edge<V, E>*> to;
@@ -45,18 +41,23 @@ public:
 		return to.find(nodeRef) != to.end();
 	}
 	Edge<V, E>* addChild(Vertex<V, E>* nodeRef) {
-		return to[nodeRef] = new Edge<V, E>(this, nodeRef);
+		if (isChild(nodeRef))	return to[nodeRef];
+		Edge<V, E>* edge = new Edge<V, E>(this, nodeRef);
+		this->to[nodeRef] = edge;
+		nodeRef->from[this] = edge;
+		return edge;
 	}
 	Edge<V, E>* addChild(Vertex<V, E>* nodeRef, E weight) {
-		return to[nodeRef] = new Edge<V, E>(weight,this, nodeRef);
+		Edge<V, E>* edge = addChild(nodeRef);
+		edge->setValue(weight);
+		return edge;
 	}
 	void removeChild(Vertex<V, E>* nodeRef) {
-		return to.erase(nodeRef);
-	}
-	bool addOutwardEdge(Edge<V, E>* edge) {	// returns false if edge is not defined from this vertex
-		if (this != edge->getFrom())	return false;
-		to[edge->getTo()] = edge;
-		return true;
+		if (isChild(nodeRef)) {
+			delete to[nodeRef];
+			nodeRef->from.erase(this);
+			to.erase(nodeRef);
+		}
 	}
 	vector<Edge<V, E>*> getInwardEdges() {
 		vector<Edge<V, E>*> v;
@@ -76,18 +77,13 @@ public:
 		return from.find(nodeRef) != from.end();
 	}
 	Edge<V, E>* addParent(Vertex<V, E>* nodeRef) {
-		return from[nodeRef] = new Edge<V, E>(nodeRef, this);
+		return nodeRef->addChild(this);
 	}
 	Edge<V, E>* addParent(Vertex<V, E>* nodeRef, E weight) {
-		return from[nodeRef] = new Edge<V, E>(weight, nodeRef, this);
+		return nodeRef->addChild(this, weight);
 	}
 	void removeParent(Vertex<V, E>* nodeRef) {
-		return from.erase(nodeRef);
-	}
-	bool addInwardEdge(Edge<V, E>* edge) {	// returns false if edge is not defined to this vertex
-		if (this != edge->getTo())	return false;
-		from[edge->getFrom()] = edge;
-		return true;
+		nodeRef->removeChild(this);
 	}
 	vector<Edge<V, E>*> getEdges() {
 		vector<Edge<V, E>*> outEdges = getOutwardEdges();

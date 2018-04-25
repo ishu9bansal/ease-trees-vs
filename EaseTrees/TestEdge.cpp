@@ -73,13 +73,13 @@ void testEdge() {
 	printEdge(&ctop);
 	printEdge(&dtoc);
 
-
+	/*s
 	chandigarh.addOutwardEdge(&ctop);
 	chandigarh.addInwardEdge(&dtoc);
 	delhi.addOutwardEdge(&dtoc);
 	delhi.addInwardEdge(&ptod);
 	mumbai.addInwardEdge(&ptom);
-
+	*/
 	printVertex(pune);
 
 	return;

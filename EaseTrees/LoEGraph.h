@@ -51,8 +51,7 @@ public:
 	void vAddEdge(Index x, Index y, bool direct) {
 		if (!direct)	swap(x, y);
 		Edge<T, U>* edge = vertex[x]->addChild(vertex[y]);
-		// this if will always be true.
-		if(vertex[y]->addInwardEdge(edge))	edges.insert(edge);
+		edges.insert(edge);
 		return;
 	}
 	void vRemoveEdge(Index x, Index y, bool direct) {
@@ -60,7 +59,6 @@ public:
 		Edge<T, U>* edge = getEdge(x, y, direct);
 		edges.erase(edge);
 		vertex[x]->removeChild(vertex[y]);
-		vertex[y]->removeParent(vertex[x]);
 		delete edge;
 		return;
 	}
