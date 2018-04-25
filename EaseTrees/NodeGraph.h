@@ -14,6 +14,12 @@ public:
 	using graph<T>::removeVertex;
 	using graph<T>::checkEdge;
 
+	~NodeGraph() {
+		for (int i = 0; i < nodeMap.size(); i++) {
+			delete nodeMap[i];
+		}
+	}
+
 	bool checkEdge(Index x, Index y, bool direct) {
 		if (!direct)	swap(x, y);
 		return nodeMap[x]->isChild(nodeMap[y]) || nodeMap[y]->isParent(nodeMap[x]);
@@ -39,6 +45,7 @@ public:
 	}
 	void removeVertex(Index nodeIndex) {
 		graph<T>::removeVertex(nodeIndex);
+		delete nodeMap[nodeIndex];
 		nodeMap[nodeIndex] = nodeMap.back();
 		nodeMap.pop_back();
 		return;

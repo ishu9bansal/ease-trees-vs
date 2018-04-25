@@ -44,9 +44,6 @@ public:
 		zero = z;
 		one = o;
 	}
-	~graph() {
-		dataMap.clear();
-	}
 	Index indexOf(const T& node) {
 		return dataMap[node];
 	}
