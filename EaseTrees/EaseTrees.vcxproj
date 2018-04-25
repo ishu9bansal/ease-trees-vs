@@ -150,6 +150,7 @@
     <ClInclude Include="Edge.h" />
     <ClInclude Include="graph.h" />
     <ClInclude Include="Header.h" />
+    <ClInclude Include="LoEGraph.h" />
     <ClInclude Include="matrixGraph.h" />
     <ClInclude Include="Node.h" />
     <ClInclude Include="NodeGraph.h" />

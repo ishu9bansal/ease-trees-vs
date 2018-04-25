@@ -58,8 +58,8 @@ void testEdge() {
 	cout << "Plan never succeeds. Not from atleast last " << ptom << " times." << endl;
 
 	vector<Edge<string, int>*> puneEdges = { &ptod,&ptom };
-	pune.setOutwardEdges(puneEdges);
-	vector<Edge<string, int>*> &refEdges = pune.getInwardEdges();
+	//pune.setOutwardEdges(puneEdges);
+	vector<Edge<string, int>*> refEdges = pune.getInwardEdges();
 	refEdges.push_back(&ctop);
 
 	puneEdges = pune.getEdges();
@@ -67,6 +67,12 @@ void testEdge() {
 	for (int i = 0; i < puneEdges.size(); i++) {
 		printEdge(puneEdges[i]);
 	}
+
+	printEdge(&ptod);
+	printEdge(&ptom);
+	printEdge(&ctop);
+	printEdge(&dtoc);
+
 
 	chandigarh.addOutwardEdge(&ctop);
 	chandigarh.addInwardEdge(&dtoc);
