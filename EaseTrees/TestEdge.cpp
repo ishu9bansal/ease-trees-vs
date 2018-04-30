@@ -31,6 +31,19 @@ void printVertex(Vertex<V, E> vertex) {
 	cout << endl;
 }
 
+template <class V, class E>
+void roadFrom(Vertex<V, E> &v1, Vertex<V, E> &v2) {
+	cout << "There is ";
+	if (!v1.isChild(&v2))	cout << "not ";
+	cout << "a road from " << v1.getValue() << " to " << v2.getValue() << endl;
+}
+template <class V, class E>
+void roadTo(Vertex<V, E> &v1, Vertex<V, E> &v2) {
+	cout << "There is ";
+	if (!v1.isParent(&v2))	cout << "not ";
+	cout << "a road to " << v1.getValue() << " from " << v2.getValue() << endl;
+}
+
 void testEdge() {
 
 	Vertex<string, int> pune("Pune");
@@ -38,11 +51,14 @@ void testEdge() {
 	Vertex<string, int> mumbai("Mumbai");
 	Vertex<string, int> chandigarh("Chandigarh");
 
-	Vertex<string, int> goa;
-	goa.setValue("Goa");
-	cout << "Let's plan for " << string(goa) << endl;	// only this bit doesn't work, everything else did
-	cout << goa.getValue() << "!!!!" << endl;
-
+	// Pune ---150---> Mumbai
+	//	^	\
+	//	|	 \
+	//	|	  \			Road Map refference
+	// 1700	   \
+	//	|		\_____1440_____
+	//	|					  v
+	// Chandigarh <---260--- Delhi
 
 	Edge<string, int> ptod(1440, &pune, &delhi);
 	Edge<string, int> ctop(1700);
@@ -55,32 +71,48 @@ void testEdge() {
 	Edge<string, int> ptom(&pune, &mumbai);
 	ptom.setValue(150);
 	
-	cout << "Plan never succeeds. Not from atleast last " << ptom << " times." << endl;
-
-	vector<Edge<string, int>*> puneEdges = { &ptod,&ptom };
-	//pune.setOutwardEdges(puneEdges);
-	vector<Edge<string, int>*> refEdges = pune.getInwardEdges();
-	refEdges.push_back(&ctop);
-
-	puneEdges = pune.getEdges();
-
-	for (int i = 0; i < puneEdges.size(); i++) {
-		printEdge(puneEdges[i]);
-	}
+	cout << "Planning for Mumbai. It is just " << ptom << "kms from here!" << endl;
 
 	printEdge(&ptod);
 	printEdge(&ptom);
 	printEdge(&ctop);
 	printEdge(&dtoc);
 
-	/*s
-	chandigarh.addOutwardEdge(&ctop);
-	chandigarh.addInwardEdge(&dtoc);
-	delhi.addOutwardEdge(&dtoc);
-	delhi.addInwardEdge(&ptod);
-	mumbai.addInwardEdge(&ptom);
-	*/
+	// ***************** Test Vertex **********************
+
+	Vertex<string, int> goa;
+	goa.setValue("Goa");
+	cout << "Let's plan for " << string(goa) << endl;	// only this bit doesn't work, everything else did
+	cout << goa.getValue() << "!!!!" << endl;
+
+	chandigarh.addChild(&pune)->setValue(1700);
+	pune.addChild(&delhi, 1440);
+	chandigarh.addParent(&delhi, 260);
+	mumbai.addParent(&pune)->setValue(150);
+
+	roadFrom(mumbai, chandigarh);
+	roadTo(mumbai, pune);
+	roadFrom(pune, delhi);
+	roadTo(chandigarh, pune);
+	
+	goa.addParent(&pune);
+	pune.removeChild(&goa);
+
+	cout << "Goa has " << goa.getParents().size() << " parents" << endl;
+	cout << "List of pune's related cities :" << endl;
+	vector<Vertex<string, int>*> cities = pune.getChildren();
+	for (int i = 0; i < cities.size(); i++) {
+		cout << '\t' << cities[i]->getValue() << endl;
+	}
+	cities = pune.getParents();
+	for (int i = 0; i < cities.size(); i++) {
+		cout << '\t' << cities[i]->getValue() << endl;
+	}
 	printVertex(pune);
+	printVertex(mumbai);
+	printVertex(chandigarh);
+	printVertex(delhi);
+
 
 	return;
 }

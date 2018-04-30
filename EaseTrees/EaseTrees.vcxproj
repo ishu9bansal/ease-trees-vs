@@ -163,6 +163,7 @@
   <ItemGroup>
     <ClCompile Include="EaseTrees.cpp" />
     <ClCompile Include="TestEdge.cpp" />
+    <ClCompile Include="TestLoEGraph.cpp" />
     <ClCompile Include="TestMatrixGraph.cpp" />
     <ClCompile Include="TestNode.cpp" />
     <ClCompile Include="stdafx.cpp">

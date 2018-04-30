@@ -17,6 +17,8 @@ public:
 	using graph<T, U>::addVertex;
 	using graph<T, U>::removeVertex;
 	using graph<T, U>::checkEdge;
+	using graph<T, U>::getWeight;
+	using graph<T, U>::setWeight;
 	using graph<T, U>::zero;
 	using graph<T, U>::one;
 
@@ -28,13 +30,13 @@ public:
 	}
 	Edge<T, U>* getEdge(Index x, Index y, bool direct) {
 		if (!direct)	swap(x, y);
-		return vertex[x]->to[vertex[y]];
+		return vertex[x]->getEdge(vertex[y]);
 	}
-	void setWeight(Index x, Index y, bool direct, Weight<U> w) {
+	void setWeight(Index x, Index y, Weight<U> w, bool direct=true) {
 		getEdge(x, y, direct)->setValue(U(w));
 		return;
 	}
-	U getWeight(Index x, Index y, bool direct) {
+	U getWeight(Index x, Index y, bool direct=true) {
 		return getEdge(x, y, direct)->getValue();
 	}
 	bool checkEdge(Index x, Index y, bool direct) {
@@ -63,25 +65,25 @@ public:
 		return;
 	}
 	void removeVertex(Index nodeIndex) {
-		graph<T>::removeVertex(nodeIndex);
+		graph<T,U>::removeVertex(nodeIndex);
 		delete vertex[nodeIndex];
 		vertex[nodeIndex] = vertex.back();
 		vertex.pop_back();
 		return;
 	}
-	vector<Edge<V, E>*> getEdges() {
-		vector<Edge<V, E>*> v;
+	vector<Edge<T, U>*> getEdges() {
+		vector<Edge<T, U>*> v;
 		for (const auto& edge : edges) {
 			v.push_back(edge);
 		}
 		return v;
 	}
 	void print() {
-		graph<T>::print();
+		graph<T,U>::print();
 		cout << endl;
 		cout << "Adjacency List:" << endl;
 		for (int i = 0; i < vertex.size(); i++) {
-			vector<Edge<T, U>*> &refEdges = vertex[i]->getOutwardEdges();
+			vector<Edge<T, U>*> refEdges = vertex[i]->getOutwardEdges();
 			cout << vertex[i]->getValue() << "\t:\t";
 			for (int j = 0; j < refEdges.size(); j++)
 				cout << refEdges[j]->getValue() << " -- " << refEdges[j]->getTo()->getValue() << " | ";
@@ -92,6 +94,6 @@ public:
 
 };
 
-void testMatrixGraph();
+void testLoEGraph();
 
 #endif // !loe_graph_h

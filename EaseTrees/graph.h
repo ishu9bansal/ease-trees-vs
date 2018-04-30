@@ -96,16 +96,22 @@ public:
 	}
 
 	virtual void vAddEdge(Index, Index, bool) = 0;		// pure virtual function
-	virtual void setWeight(Index a, Index b, bool AtoB, Weight<U> w) {
+	virtual void setWeight(Index a, Index b, Weight<U> w, bool AtoB=true) {
 		// implement if wanted
 	}
-	virtual U getWeight(Index a, Index b, bool AtoB) {
+	virtual U getWeight(Index a, Index b, bool AtoB=true) {
 		if (checkEdge(a, b, AtoB)) {
 			return one;
 		}
 		else {
 			return zero;
 		}
+	}
+	void setWeight(const T& nodeA, const T& nodeB, Weight<U> w, bool AtoB = true) {
+		setWeight(dataMap[nodeA], dataMap[nodeB], w, AtoB);
+	}
+	U getWeight(const T& nodeA, const T& nodeB, bool AtoB = true) {
+		return getWeight(dataMap[nodeA], dataMap[nodeB], AtoB);
 	}
 	void addEdge(Index a, Index b, bool AtoB) {
 		addEdge(a, b, AtoB, one);
@@ -126,7 +132,7 @@ public:
 	}
 	void addEdge(Index a, Index b, bool AtoB, Weight<U> w) {
 		vAddEdge(a, b, AtoB);
-		setWeight(a, b, AtoB, w);
+		setWeight(a, b, w, AtoB);
 	}
 	void addEdge(Index a, Index b, Weight<U> w) {
 		addEdge(a, b, true, w);
@@ -168,7 +174,7 @@ public:
 	}
 	virtual void vRemoveEdge(Index, Index, bool) = 0;		// pure virtual function
 	void removeEdge(Index a, Index b, bool AtoB) {
-		setWeight(a, b, AtoB, zero);
+		setWeight(a, b, zero, AtoB);
 		vRemoveEdge(a, b, AtoB);
 	}
 	void removeEdge(Index a, Index b) {

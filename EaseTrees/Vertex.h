@@ -23,6 +23,10 @@ public:
 		value = t;
 		return;
 	}
+	Edge<V, E>* getEdge(Vertex<V,E>* v) {
+		return to[v];
+		// patch code. Make it more usable.
+	}
 	vector<Edge<V, E>*> getOutwardEdges() {
 		vector<Edge<V, E>*> v;
 		for (const auto& pair : to) {
