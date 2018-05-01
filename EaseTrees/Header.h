@@ -10,3 +10,4 @@
 #include "Edge.h"
 #include "Vertex.h"
 #include "LoEGraph.h"
+#include "TreeNode.h"
