@@ -5,11 +5,11 @@ using namespace std;
 
 template <class T, class Compare >
 class ref_compare{
+private:
+	static Compare compare;
 public:
   bool operator() (const T* lhs, const T* rhs) const
-  {
-  	Compare compare;
-  	return compare(*lhs,*rhs);}
+  {return compare(*lhs,*rhs);}
 };
 
 template<class V, class K, class Compare = less<pair<V,K> > >
