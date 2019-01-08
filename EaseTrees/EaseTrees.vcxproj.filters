@@ -57,6 +57,9 @@
     <ClInclude Include="SegmentTree.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="Bucket.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -87,6 +90,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="SegmentTree.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Bucket.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

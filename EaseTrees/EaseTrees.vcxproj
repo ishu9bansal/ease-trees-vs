@@ -147,6 +147,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Bucket.h" />
     <ClInclude Include="Edge.h" />
     <ClInclude Include="graph.h" />
     <ClInclude Include="Header.h" />
@@ -163,6 +164,7 @@
     <ClInclude Include="Vertex.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Bucket.cpp" />
     <ClCompile Include="EaseTrees.cpp" />
     <ClCompile Include="SegmentTree.cpp" />
     <ClCompile Include="TestEdge.cpp" />
