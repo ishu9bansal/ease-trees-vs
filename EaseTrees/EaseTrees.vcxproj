@@ -154,6 +154,7 @@
     <ClInclude Include="matrixGraph.h" />
     <ClInclude Include="Node.h" />
     <ClInclude Include="NodeGraph.h" />
+    <ClInclude Include="SegmentTree.h" />
     <ClInclude Include="SizeException.h" />
     <ClInclude Include="SquareVector.h" />
     <ClInclude Include="stdafx.h" />
@@ -163,6 +164,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EaseTrees.cpp" />
+    <ClCompile Include="SegmentTree.cpp" />
     <ClCompile Include="TestEdge.cpp" />
     <ClCompile Include="TestLoEGraph.cpp" />
     <ClCompile Include="TestMatrixGraph.cpp" />

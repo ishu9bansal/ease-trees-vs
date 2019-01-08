@@ -11,3 +11,4 @@
 #include "Vertex.h"
 #include "LoEGraph.h"
 #include "TreeNode.h"
+#include "SegmentTree.h"
