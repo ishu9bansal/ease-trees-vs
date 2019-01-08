@@ -14,6 +14,7 @@ private:
 	// sqrt(n) if not defined
 	// n: total size of values
 	int block;
+	B nullBucket;
 
 	vector<T> valueList;
 	vector<B> bucketList;
@@ -28,7 +29,7 @@ private:
 	combineBuckets mergeBuckets;
 
 	B getBucket(int i, int j) {
-		if (i >= j)	return NULL;
+		if (i >= j)	return nullBucket;
 		int l = i / block;
 		int r = (j - 1) / block;
 		if (i%block == 0 && j == i + block && l < bucketList.size()) {
@@ -52,7 +53,7 @@ private:
 		block = bucket_size;
 		if (!block)	block = sqrt(n);
 		n = ((n - 1) / block) + 1;
-		bucketList.assign(n, NULL);
+		bucketList.assign(n, nullBucket);
 		// removed this for optimization
 		// preprocessing is not required
 		// can be produced on demand, used memoization
@@ -62,6 +63,7 @@ private:
 	}
 public:
 	Bucket(vector<T> v){
+		nullBucket = makeBucket(-1, -1, v);
 		assign(v);
 	}
 	void assign(vector<T> v) {
