@@ -151,6 +151,7 @@
     <ClInclude Include="Edge.h" />
     <ClInclude Include="graph.h" />
     <ClInclude Include="Header.h" />
+    <ClInclude Include="inout.h" />
     <ClInclude Include="LoEGraph.h" />
     <ClInclude Include="matrixGraph.h" />
     <ClInclude Include="Node.h" />
@@ -166,6 +167,7 @@
   <ItemGroup>
     <ClCompile Include="Bucket.cpp" />
     <ClCompile Include="EaseTrees.cpp" />
+    <ClCompile Include="inout.cpp" />
     <ClCompile Include="SegmentTree.cpp" />
     <ClCompile Include="TestEdge.cpp" />
     <ClCompile Include="TestLoEGraph.cpp" />
