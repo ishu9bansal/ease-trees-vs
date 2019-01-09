@@ -62,11 +62,11 @@ private:
 		}*/
 	}
 public:
-	Bucket(vector<T> v){
+	Bucket(const vector<T> &v){
 		nullBucket = makeBucket(-1, -1, v);
 		assign(v);
 	}
-	void assign(vector<T> v) {
+	void assign(const vector<T> &v) {
 		valueList = v;
 		updateBucketList();
 	}
