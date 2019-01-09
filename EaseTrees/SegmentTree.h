@@ -65,15 +65,6 @@ private:
 		if (!(node->rchild))	node->value = node->lchild->value;
 		else	node->value = combine(node->lchild->value, node->rchild->value);
 	}
-	void update(SegmentNode<T>* node, T value) {
-		if (!node)	return;
-		//	this will save tree from going into invalid state
-		if (node->lchild || node->rchild)	return;
-		node->value = value;
-		unordered_set<SegmentNode<T>* > h;
-		h.insert(node->parent);
-		update(h);
-	}
 	void update(unordered_set<SegmentNode<T>* > &childSet) {
 		unordered_set<SegmentNode<T>* > parentSet;
 		while (!childSet.empty()) {
@@ -100,10 +91,7 @@ public:
 		while (n / two)	two *= 2;
 		root = makeTree(two, v);
 	}
-	void update(int i, T value) {
-		update(leaf[i], value);
-	}
-	void update(int i, int l, T value) {
+	void update(int i, T value, int l = 1) {
 		unordered_set<SegmentNode<T>* > h;
 		for (int k = i; k < i + l && k < leaf.size(); k++) {
 			leaf[k]->value = value;
@@ -116,6 +104,22 @@ public:
 		for (int k = 0; k < v.size() && k + i < leaf.size(); k++) {
 			leaf[i + k]->value = v[k];
 			h.insert(leaf[i + k]->parent);
+		}
+		update(h);
+	}
+	void leftCombine(int i, T value, int l = 1) {
+		unordered_set<SegmentNode<T>* > h;
+		for (int k = i; k < i + l && k < leaf.size(); k++) {
+			leaf[k]->value = combine(value,leaf[k]->value);
+			h.insert(leaf[k]->parent);
+		}
+		update(h);
+	}
+	void rightCombine(int i, T value, int l = 1) {
+		unordered_set<SegmentNode<T>* > h;
+		for (int k = i; k < i + l && k < leaf.size(); k++) {
+			leaf[k]->value = combine(leaf[k]->value, value);
+			h.insert(leaf[k]->parent);
 		}
 		update(h);
 	}
