@@ -116,8 +116,31 @@ void test(int q) {
 }
 
 void testBucket(){
-	int n = 10;
+	/*int n = 10;
 	while (n--)	test(100);
 	n = 1;
-	while (n--)	aggressiveTest(time(NULL));
+	while (n--)	aggressiveTest(time(NULL));*/
+	int n = 100;
+	vector<int> v;
+	while (n--) {
+		v.push_back(rand() % 5000000);
+	}
+
+	Bucket<int> bucket(v);
+	
+	cout << endl;
+	cout << "Bucket 3 is " << bucket(3) << endl;
+	n = v.size();
+	cout << "Range queries:" << endl;
+	int x, y;
+	for (int i = 0; i < 10; i++) {
+		x = rand() % n;
+		y = rand() % n;
+		if (x > y)	swap(x, y);
+		cout << x << ' ' << y << '\t' << bucket(x, y) << endl;
+	}
+	vector<int> buckets = bucket();
+	for (int i = 0; i < buckets.size(); i++) {
+		cout << buckets[i] << '\t';
+	}
 }

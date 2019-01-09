@@ -6,8 +6,42 @@
 #include <cmath>
 using namespace std;
 
+template <class T>
+struct maxInRange {
+	T operator() (int i, int j, const vector<T> &v) {
+		if (j > v.size())	j = v.size();
+		if (i >= j || i < 0)	return NULL;
+		T t = v[i];
+		int k = i + 1;
+		while (k < j) {
+			if (v[k] > t)	t = v[k];
+			k++;
+		}
+		return t;
+	}
+};
 
-template <class T, class B, class R,class rangeToBucket, class bucketToResult, class combineBuckets, unsigned int bucket_size = 0>
+template <class T>
+struct bucketResult {
+	T operator()(T b) {
+		return b;
+	}
+};
+
+template <class B>
+struct mergeBuckets {
+	B operator()(B a, B b) {
+		if (!a)	return b;
+		if (!b)	return a;
+		return a>b?a:b;
+	}
+};
+
+template <class T, class B=T, class R=T, 
+	class rangeToBucket = maxInRange<T>, 
+	class bucketToResult = bucketResult<T>, 
+	class combineBuckets = mergeBuckets<T>, 
+	unsigned int bucket_size = 0>
 class Bucket {
 private:
 	// size of a single block
