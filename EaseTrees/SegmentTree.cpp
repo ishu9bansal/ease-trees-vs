@@ -1,4 +1,5 @@
 #include <iostream>
+#include "inout.h"
 #include "SegmentTree.h"
 
 using namespace std;
@@ -13,10 +14,11 @@ void testSegmentTree(){
 	cout << st.query(0, 8) << endl;
 	cout << st.query(3) << endl;
 	cout << st.query(4) << endl;
-	vector<int> v = st.getValues();
-	for (int i = 0; i < v.size(); i++) {
-		if(i)	cout << "\t";
-		cout << v[i];
-	}
-	cout << endl;
+	print(st.getValues());
+	vector<int> v;
+	st.update(4, 2, 5);
+	v = st.getValues();
+	print(v);
+	st.update(2, v);
+	print(st.getValues());
 }

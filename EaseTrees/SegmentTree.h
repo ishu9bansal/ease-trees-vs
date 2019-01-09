@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <functional>
+#include <unordered_set>
 using namespace std;
 
 template <class T>
@@ -60,15 +61,31 @@ private:
 	}
 	void update(SegmentNode<T>* node) {
 		if (!node)	return;
-		node->value = combine(node->lchild->value, node->rchild->value);
-		update(node->parent);
+		if (!(node->lchild))	return;
+		if (!(node->rchild))	node->value = node->lchild->value;
+		else	node->value = combine(node->lchild->value, node->rchild->value);
 	}
 	void update(SegmentNode<T>* node, T value) {
 		if (!node)	return;
 		//	this will save tree from going into invalid state
 		if (node->lchild || node->rchild)	return;
 		node->value = value;
-		update(node->parent);
+		unordered_set<SegmentNode<T>* > h;
+		h.insert(node->parent);
+		update(h);
+	}
+	void update(unordered_set<SegmentNode<T>* > &childSet) {
+		unordered_set<SegmentNode<T>* > parentSet;
+		while (!childSet.empty()) {
+			parentSet.clear();
+			for (auto node : childSet) {
+				if (!node)	continue;
+				parentSet.insert(node->parent);
+				update(node);
+			}
+			swap(childSet, parentSet);
+		}
+		return;
 	}
 public:
 	SegmentTree(const vector<T> &v) {
@@ -85,6 +102,22 @@ public:
 	}
 	void update(int i, T value) {
 		update(leaf[i], value);
+	}
+	void update(int i, int l, T value) {
+		unordered_set<SegmentNode<T>* > h;
+		for (int k = i; k < i + l && k < leaf.size(); k++) {
+			leaf[k]->value = value;
+			h.insert(leaf[k]->parent);
+		}
+		update(h);
+	}
+	void update(int i, const vector<T> &v) {
+		unordered_set<SegmentNode<T>* > h;
+		for (int k = 0; k < v.size() && k + i < leaf.size(); k++) {
+			leaf[i + k]->value = v[k];
+			h.insert(leaf[i + k]->parent);
+		}
+		update(h);
 	}
 	T query(int i, int j) {
 		//	i: inclusive, j: exclusive
