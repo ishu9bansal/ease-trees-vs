@@ -1,6 +1,7 @@
 #ifndef segment_tree_h
 #define segment_tree_h
 
+#include <queue>
 #include <vector>
 #include <functional>
 #include <unordered_set>
@@ -52,12 +53,33 @@ private:
 		leaf.assign(size, NULL);
 		return makeTree(0, size, v);
 	}
+	SegmentNode<T>* makeTree(queue<SegmentNode<T>* > &q) {
+		SegmentNode<T>* node;
+		while (!q.empty()) {
+			node = q.front();
+			q.pop();
+			if (q.empty())	return node;
+			if (q.front()->l) {
+				q.push(createParent(node, q.front()));
+				q.pop();
+			}
+			else {
+				q.push(createParent(node));
+			}
+		}
+		return NULL;
+	}
+	SegmentNode<T>* createParent(SegmentNode<T>* lchild, SegmentNode<T>* rchild = NULL) {
+		if (!lchild)	return NULL;
+		if (!rchild)	return new SegmentNode<T>(lchild->l, lchild->r, lchild->value, lchild);
+		return new SegmentNode<T>(lchild->l, rchild->r, combine(lchild->value, rchild->value), lchild, rchild);
+	}
 	T query(SegmentNode<T>* node, int i, int j) {
 		//	i: inclusive, j: exclusive
 		if (!node)	return zero;
 		if (i >= j || j <= node->l || i >= node->r)	return zero;
 		if (j >= node->r&&i <= node->l)	return node->value;
-		return query(node->lchild, i, j) + query(node->rchild, i, j);
+		return combine(query(node->lchild, i, j), query(node->rchild, i, j));
 	}
 	void update(SegmentNode<T>* node) {
 		if (!node)	return;
@@ -80,12 +102,15 @@ private:
 	}
 public:
 	SegmentTree(const vector<T> &v) {
-		int two = 2;
-		int n = v.size();
-		while (n / two)	two *= 2;
-		root = makeTree(two, v);
+		queue<SegmentNode<T>* > q;
+		for (int i = 0; i < v.size(); i++) {
+			leaf.push_back(new SegmentNode<T>(i, i + 1, v[i]));
+			q.push(leaf.back());
+		}
+		root = makeTree(q);
 	}
 	SegmentTree(unsigned int n) {
+		// recursive implementation, creates large heap memory overhead
 		vector<T> v;	// empty vector, with size = 0
 		int two = 2;
 		while (n / two)	two *= 2;

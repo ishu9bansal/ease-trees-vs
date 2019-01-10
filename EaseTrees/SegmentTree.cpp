@@ -24,4 +24,23 @@ void testSegmentTree(){
 	print(v);
 	st.update(2, v);
 	print(st.getValues());
+
+	cout << "Testing iterative implementation" << endl;
+
+	vector<int> inputVector = { 3,4,5,7,2,4,1,6,5,5,4,1,8,6,3,9,4,6,7,5,2 };
+	SegmentTree<int> tree(inputVector);
+	print(tree.getValues());
+	tree.leftCombine(4, 5, 7);
+	print(tree.getValues());
+	cout << "2,5\t" << tree.query(2, 5) << endl;
+	tree.update(3, 7);
+	print(tree.getValues());
+	cout << "3,4\t" << tree.query(3, 4) << endl;
+	cout << "0,2\t" << tree.query(0, 2) << endl;
+	tree.update(6, 7);
+	print(tree.getValues());
+	cout << "0,8\t" << tree.query(0, 8) << endl;
+	cout << "3:\t" << tree.query(3) << endl;
+	cout << "4:\t" << tree.query(4) << endl;
+
 }
