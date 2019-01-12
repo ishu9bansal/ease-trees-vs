@@ -63,6 +63,9 @@
     <ClInclude Include="inout.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="LazySegmentTree.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -99,6 +102,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="inout.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LazySegmentTree.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

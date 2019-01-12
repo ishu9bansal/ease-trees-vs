@@ -14,3 +14,4 @@
 #include "SegmentTree.h"
 #include "Bucket.h"
 #include "inout.h"
+#include "LazySegmentTree.h"

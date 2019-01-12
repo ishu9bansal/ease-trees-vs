@@ -152,6 +152,7 @@
     <ClInclude Include="graph.h" />
     <ClInclude Include="Header.h" />
     <ClInclude Include="inout.h" />
+    <ClInclude Include="LazySegmentTree.h" />
     <ClInclude Include="LoEGraph.h" />
     <ClInclude Include="matrixGraph.h" />
     <ClInclude Include="Node.h" />
@@ -168,6 +169,7 @@
     <ClCompile Include="Bucket.cpp" />
     <ClCompile Include="EaseTrees.cpp" />
     <ClCompile Include="inout.cpp" />
+    <ClCompile Include="LazySegmentTree.cpp" />
     <ClCompile Include="SegmentTree.cpp" />
     <ClCompile Include="TestEdge.cpp" />
     <ClCompile Include="TestLoEGraph.cpp" />
