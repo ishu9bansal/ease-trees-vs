@@ -46,15 +46,21 @@ class LazySegmentTree {
 	// like wise upto the top
 private:
 	LazySegmentNode<T>* root;
+
+	//	both these functions should have same complexity
 	BinaryFunction combine;
 	MultiplyFunction bulkCombine;
+
 	LazySegmentNode<T>* makeTree(int l, int r, const vector<T> &v) {
-		//	recursive solution
+		//	if leaf node, create node with the values
 		if (l + 1 == r)	return new LazySegmentNode<T>(l, r, (v.size()?v[l]:zero), zero);
 		int m = (l + r) / 2;
+		//	make child trees recursivelly
 		LazySegmentNode<T>* left = makeTree(l, m, v);
 		LazySegmentNode<T>* right = makeTree(m, r, v);
+		//	set the current node value from newly made trees
 		T value = combine(left->value, right->value);
+		//	return the current tree refrence
 		return new LazySegmentNode<T>(l, r, value, zero, left, right);
 	}
 	void makeTree(const vector<T> &v) {
@@ -66,14 +72,22 @@ private:
 	}
 	T combineValueOf(LazySegmentNode<T>* node) {
 		if (!node)	return zero;
+		//	use bulk combine operation to make the lazy value to be added to true value
+		//	this bulk combine should be of same complexity as combine
+		//	otherwiise this implementation is useless
 		T lazyValue = bulkCombine(node->l, node->r, node->lazy);
 		return combine(node->value, lazyValue);
 	}
 	void resolve(LazySegmentNode<T>* node) {
+		//	this function resolves the given node to its true value,
+		//	i.e., it passes its lazy value to its children and clear it
 		if (!node)	return;
+		//	if lazy value is zero no need to proceed, it is already resolved
 		if (node->lazy==zero)	return;
-		update(node->lchild, node->l, node->r, node->lazy);
-		update(node->rchild, node->l, node->r, node->lazy);
+		//	if child exist, add parent's lazy value to its own
+		if (node->lchild)	node->lchild->lazy = combine(node->lchild->lazy, node->lazy);
+		if (node->rchild)	node->rchild->lazy = combine(node->rchild->lazy, node->lazy);
+		//	resolve node's lazy value into its true value, and set lazy zero
 		node->value = combineValueOf(node);
 		node->lazy = zero;
 		return;
@@ -81,21 +95,31 @@ private:
 	T query(LazySegmentNode<T>* node, int i, int j) {
 		//	i: inclusive, j: exclusive
 		if (!node)	return zero;
+		//	node range do not intersect with given range, then just return zero
 		if (i >= j || j <= node->l || i >= node->r)	return zero;
+		//	resolve the current node to hold the true value
 		resolve(node);
+		//	node range is completely inside given range, blindly return the resolved node value
 		if (j >= node->r&&i <= node->l)	return node->value;
+		//	else recursivelly get results from children
 		return combine(query(node->lchild, i, j), query(node->rchild, i, j));
 	}
 	void update(LazySegmentNode<T>* node, int i, int j, T value) {
+		//	add given value to all nodes under given node which lies in the given range
 		if (!node)	return;
+		//	node range do not intersect with given range, then just return
 		if (i >= j || j <= node->l || i >= node->r)	return;
+		//	node range is completely inside given range, blindly update lazy
 		if (j >= node->r&&i <= node->l) {
 			node->lazy = combine(node->lazy, value);
 			return;
 		}
+		//	else, resolve the current node to hold the true value and pass any lazy parameters to its children
 		resolve(node);
+		//	then update the children recursivelly
 		update(node->lchild, i, j, value);
 		update(node->rchild, i, j, value);
+		//	now update the value of current node as its children are updated
 		node->value = combine(combineValueOf(node->lchild), combineValueOf(node->rchild));
 		node->lazy = zero;
 		return;
