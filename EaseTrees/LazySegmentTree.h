@@ -52,6 +52,7 @@ private:
 	MultiplyFunction bulkCombine;
 
 	LazySegmentNode<T>* makeTree(int l, int r, const vector<T> &v) {
+		if(l>=r)    return NULL;    // validation check
 		//	if leaf node, create node with the values
 		if (l + 1 == r)	return new LazySegmentNode<T>(l, r, (v.size()?v[l]:zero), zero);
 		int m = (l + r) / 2;
